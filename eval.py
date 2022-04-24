@@ -7,9 +7,14 @@ import dns.resolver
 
 def get_dns_conf(zonename):
         result = dns.resolver.query(zonename,'A')
-        if result == 'localhost':
-                print('el dominio '+ zonename + 'está configurada en :' + result)
-        
+        for ipval in result:
+                
+                direccion_ip= (ipval.to_text())
+                print(direccion_ip)
+                if direccion_ip == 'localhost' or direccion_ip=='127.0.0.1':
+                        print('el dominio '+ zonename + ' está configurada en :' + direccion_ip)
+                else:
+                        print('El dominio ' +zonename+ ' esta configurado en :'+ direccion_ip)
 def get_status(servicio):
 
         status = os.system('systemctl status '+servicio+ ' > /dev/null')
@@ -42,4 +47,4 @@ def get_install(servicio):
 
 
         
-get_install (sys. argv[1])
+get_dns_conf (sys. argv[1])
