@@ -24,8 +24,19 @@ fi
 return $punt1
 }
 
+directorio(){
+    if [ "$1" == "apache" ]; then
+    servicio="apache2"
+
+    elif [ "$1" == "dns" ];then
+    servicio="bind9"
+
+
+fi
+}
+
 puerto(){
-escucha=$(netstat -plnt 1>> stout.log 2>> stderr.log | grep $2| awk {'print $6'})
+escucha=$(netstat -plnt 2>> stderr.log | grep $2 | awk {'print $6'})
 
 if [ "$escucha" = "LISTEN" ]; then 
     echo "${verde} El servicio $1 corriendo en el puerto $2"
