@@ -1,0 +1,14 @@
+Script iniciado en 2022-05-16 03:54:15-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="159" LINES="23"]
+[31m El servicio  no está instalado
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Pruebe 'grep --help' para más información.
+[31m El servicio  no está en el puerto 
+[37mTu puntuacion es: 0
+
+Script terminado en 2022-05-16 03:54:15-05:00 [CÓDIGO_SALIDA_ORDEN="0"]
+Script iniciado en 2022-05-16 03:54:26-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="159" LINES="23"]
+[32m El servicio apache2 está instalado correctamente
+[32m El servicio apache corriendo en el puerto 80
+[37mTu puntuacion es: 20
+
+Script terminado en 2022-05-16 03:54:26-05:00 [CÓDIGO_SALIDA_ORDEN="0"]

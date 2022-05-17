@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 rojo=`tput setaf 1`
 amarillo=`tput setaf 3`
 verde=`tput setaf 2`
@@ -6,7 +6,7 @@ blanco=`tput setaf 7`
 
 
 instalacion(){
-if [ "$1" == "apache" ]; then
+    if [ "$1" == "apache" ]; then
     servicio="apache2"
 
 elif [ "$1" == "dns" ];then
