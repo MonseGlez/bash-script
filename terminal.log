@@ -1,0 +1,17 @@
+Script iniciado en 2022-05-17 16:48:13-05:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="123" LINES="13"]
+[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ script[K[K[K[K[K[K
+[?2004l[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ 
+[?2004l[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ 
+[?2004l[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ exit[2Plsexit[Kscript -q -c "ls" filename.txt[8@vagrant up[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K[2Plsscript -q -c "vagrant up" filename > /dev/null[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cman script[K[6Pexit[2Plsexitcat hola bash > hola[7Pexit[1Pcat[1Plsnano prueba.sh cat typescript[Cls[Kcat stout.log [1@derr[C[C[C[C[Cls[K./script.sh apache 80[6Pnano script.sh prueba[C[C[C[Cls [K[10@nano eval.py[C[4Pgit push[Ccommit -m "cambios"push [Kcommit -m "cambios"add .[Kstatus[2Pdiffstatus[1Prm times ls[Krm '80rojo=^[[31m' ls[Krm times git status[2Pdiffstatus[1Padd .commit -m "cambios"push [Kcommit -m "cambios"push [K[4@nano eval.py[Cls [K[12@nano prueba.sh[Cscript[C[C[C[C./script.sh apache 80ls[Kcat stderr.log [1Pout[C[C[C[C[Cls[Kcat typescript nano prueba.sh[Cls[Kcatexitbash > hola[2Pcat hola [5Pexit[2Plsexitman scriptscript -q -c "vagrant up" filename > /dev/null[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kexitscript -q -c "vagrant up" filename.txt[8Pls[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ce[Kxit[2Plsexit[K
+[?2004l[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ 
+[?2004l[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ 
+[?2004l[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ 
+[?2004l[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ 
+[?2004l[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ 
+[?2004l[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ 
+[?2004l[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ ^C[?2004l[?2004h[?2004l
+[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ ^C[?2004l[?2004h[?2004l
+[?2004h]0;monse@debian: ~/evaluacion[01;32mmonse@debian[00m:[01;34m~/evaluacion[00m$ exit
+[?2004lexit
+
+Script terminado en 2022-05-17 16:57:01-05:00 [CÓDIGO_SALIDA_ORDEN="130"]
