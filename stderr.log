@@ -1,1 +1,5 @@
-AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+mkdir: cannot create directory '/var/run/apache2': Permission denied
+chown: changing ownership of '/var/lock/apache2.3RxHOSbETi': Operation not permitted
+cat: /lib/systemd/system/bind9.service: No existe el fichero o el directorio
+cat: /lib/systemd/system/bind9.service: No existe el fichero o el directorio
+cat: /lib/systemd/system/bind9.service: No existe el fichero o el directorio
