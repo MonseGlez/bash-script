@@ -15,23 +15,19 @@ cat /lib/systemd/system/"$servicio".service 1>> stout.log 2>> stderr.log
 
 if [ $? == 0 ]; then
     echo "El servicio "$servicio" está instalado correctamente"
-    punt1=10
 else
     zenity --error --text "El servicio $servicio no está instalado"
 
-    punt1=0
 fi
-return $punt1
 }
 
 directorio(){
        
-    apache2ctl -S | grep -o -E 'alias (.*)|(namevhost|server) (.*)\s' | cut -d ' ' -f 2 | grep $NOMBRE
+    a2query -s| grep $NOMBRE
     if [ $? == 0 ]; then
     a2query -s| grep $NOMBRE  | xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
+    zenity --width=250 --height=250 --info --text="$El servicio "$servicio" esta configurado en el virtual host mostrado anteriormente" 
 
-    echo "$El servicio "$servicio" esta configurado en el virtual host mostrado anteriormente" 
-    punt4=10
     else
     zenity --error --text "No existe el virtual host con tu nombre, a continuación verás los virtual host que configuraste :"
     a2query -s | xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
@@ -41,7 +37,6 @@ directorio(){
     
     fi
              
-return $punt4
 }
 
 puerto(){
@@ -56,25 +51,10 @@ else
 
     punt2=0
 fi
-return $punt2
 }
 
 
-evaluacion(){
 
-punt1=0
-punt2=0
-punt3=0
-punt4=0
-
-puntf=0
-instalacion $1
-puerto $1 $2
-directorio  
-echo $3
-puntf=$((punt1+punt2+punt3+punt4))
-echo "${blanco}Tu puntuacion es:"  $puntf
-}
 
 menu(){
     NOMBRE=$(zenity --entry --title="Nombre de Alumno" --text="Introduce tu nombre")
