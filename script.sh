@@ -17,7 +17,8 @@ if [ $? == 0 ]; then
     echo "El servicio "$servicio" está instalado correctamente"
     punt1=10
 else
-    echo " El servicio "$servicio" no está instalado"
+    zenity --error --text "El servicio $servicio no está instalado"
+
     punt1=0
 fi
 return $punt1
@@ -51,7 +52,8 @@ if [ "$escucha" = "LISTEN" ]; then
     echo "${verde} El servicio $1 corriendo en el puerto $2"
     punt2=10
 else
-    echo "${rojo} El servicio $1 no está en el puerto $2"
+    zenity --error --text "El servicio $1 no está en el puerto $2"
+
     punt2=0
 fi
 return $punt2
@@ -86,7 +88,8 @@ menu(){
     1) servicio='apache'
        puerto='80'
        instalacion $servicio $puerto | xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
-        
+       puerto $servicio $puerto |  xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
+ 
        directorio $NOMBRE $servicio |  xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
 
 
@@ -95,6 +98,7 @@ menu(){
     2) servicio='dns'
        puerto='53'
        instalacion $servicio $puerto | xargs -L1 -I %  zenity --width=250 --height=250 --info --text=%
+       puerto $servicio $puerto |  xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
        ;;
     esac
     done
