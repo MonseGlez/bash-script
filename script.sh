@@ -30,7 +30,7 @@ directorio(){
 
     else
     zenity --error --text "No existe el virtual host con tu nombre, a continuación verás los virtual host que configuraste :"
-    a2query -s | xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
+    #a2query -s | xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
 
 
 
@@ -60,6 +60,7 @@ menu(){
     NOMBRE=$(zenity --entry --title="Nombre de Alumno" --text="Introduce tu nombre")
     zenity --info --title="Evaluación automática" --width=250  --text="Se mostrará un menú para seleccionar el servicio a evaluar."
     OPCION="0"
+    
     until [ $OPCION == "3" ]
     do
     OPCION=$(zenity --list --title="Seleccione la opción a ejecutar" --column="Id" --column="Opcion" 1 "Evaluar servicio APACHE" 2 "Evaluar servicio DNS" 3 "Salir")
@@ -69,8 +70,9 @@ menu(){
        puerto='80'
        instalacion $servicio $puerto | xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
        puerto $servicio $puerto |  xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
- 
+    
        directorio $NOMBRE $servicio |  xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
+       echo "servicio,puerto,virtualhost" > testgen.csv; \ echo "$servicio,$puerto, directorio $NOMBRE $servicio">> test.csv
 
 
        ;;
