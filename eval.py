@@ -55,5 +55,5 @@ def get_install(servicio):
 #if __name__== "__main__":
         
 
-get_install(sys.argv[1])        
+get_port(int(sys.argv[1]))        
 #get_dns_conf(sys. argv[1])

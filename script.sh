@@ -1,36 +1,32 @@
 #!/bin/bash
-rojo=`tput setaf 1`
-amarillo=`tput setaf 3`
-verde=`tput setaf 2`
-blanco=`tput setaf 7`
 
 instalacion(){
     if [ "$1" == "apache" ]; then
-    servicio="apache2"
+        servicio="apache2"
 
-elif [ "$1" == "dns" ];then
-    servicio="bind9"
-fi
-cat /lib/systemd/system/"$servicio".service 1>> stout.log 2>> stderr.log
+    elif [ "$1" == "dns" ];then
+        servicio="bind9"
+    fi
+    cat /lib/systemd/system/"$servicio".service 1>> stout.log 2>> stderr.log
 
-if [ $? == 0 ]; then
-    echo "El servicio "$servicio" está instalado correctamente"
-else
-    zenity --error --text "El servicio $servicio no está instalado"
+    if [ $? == 0 ]; then
+        echo "El servicio "$servicio" está instalado correctamente"
+    else
+        zenity --error --text "El servicio $servicio no está instalado"
 
-fi
+    fi
 }
 
 directorio(){
        
-    a2query -s| grep $NOMBRE
+    a2query -s| grep $MATRICULA
     if [ $? == 0 ]; then
-    a2query -s| grep $NOMBRE  | xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
-    zenity --width=250 --height=250 --info --text="$El servicio "$servicio" esta configurado en el virtual host mostrado anteriormente" 
+    a2query -s| grep $MATRICULA  | xargs -L1 -I %  zenity --info --text=% 
+    zenity  --info --text="$El servicio "$servicio" esta configurado en el virtual host mostrado anteriormente" 
 
     else
-    zenity --error --text "No existe el virtual host con tu nombre, a continuación verás los virtual host que configuraste :"
-    #a2query -s | xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
+    zenity --error --text "No existe el virtual host con tu MATRICULA, a continuación verás los virtual host que configuraste :"
+    a2query -s | xargs -L1 -I %  zenity  --info --text=% 
 
 
 
@@ -57,8 +53,9 @@ fi
 
 
 menu(){
-    NOMBRE=$(zenity --entry --title="Nombre de Alumno" --text="Introduce tu nombre")
-    zenity --info --title="Evaluación automática" --width=250  --text="Se mostrará un menú para seleccionar el servicio a evaluar."
+    MATRICULA=$(zenity --entry --title="Ingresa tu maticula de Alumno" --text="Introduce tu MATRICULA")
+    
+    zenity --info --title="Evaluación automática"  --text="Se mostrará un menú para seleccionar el servicio a evaluar."
     OPCION="0"
     
     until [ $OPCION == "3" ]
@@ -67,12 +64,13 @@ menu(){
     case $OPCION in
 
     1) servicio='apache'
+       
        puerto='80'
-       instalacion $servicio $puerto | xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
-       puerto $servicio $puerto |  xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
+       instalacion $servicio $puerto | xargs -L1 -I %  zenity  --info --text=% 
+       puerto $servicio $puerto |  xargs -L1 -I %  zenity --info --text=% 
     
-       directorio $NOMBRE $servicio |  xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
-       echo "servicio,puerto,virtualhost" > testgen.csv; \ echo "$servicio,$puerto, directorio $NOMBRE $servicio">> test.csv
+       directorio $MATRICULA $servicio |  xargs -L1 -I %  zenity --width=250 --height=250 --info --text=% 
+       echo "$servicio,$puerto, $MATRICULA, $servicio">> test.csv
 
 
        ;;
@@ -84,12 +82,6 @@ menu(){
        ;;
     esac
     done
-     
-
-    
-
-    
-
 
 
 
