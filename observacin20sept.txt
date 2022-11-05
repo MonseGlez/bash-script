@@ -1,0 +1,90 @@
+ANTECEDENTES
+
+Teniendo en cuenta lo anterior, pensamos  ... ( 3ra persona ) 
+
+Hablar de la web 3.0 , web 4.0...
+
+Versiones de eminus, mencionar desde eminus 3 y 4.  Las versiones ACTUALMENTE SON , T SERAN Tomados de forma indistintamente
+
+
+Moodle. 
+Millones ? Menos extaustivo
+
+
+Planteamiento del problema .
+Aclarar en el planteamiento , las versiones 3 y 4, sin embargo se manejara indistintamente....
+
+>Existe una correlación (?) Especificar más a detalle .
+>Tiempo en el que se ejecuta la tarea,  el docente x , y y lleva una inversión mayor de tiempo para revisar las actividades. 
+No hay una plataforma que automatice etc etc.
+
+
+Justificación
+
+Podrán reforzar los conocimientos (?)
+Cambiar por palabras o frases.
+
+Método de investigación
+Identificar problemas (?) Áreas de mejora o de oportunidad.
+Mencionar la metodología en el desarrollo de la herramienta  addie y 
+
+Marco teórico
+Linux distribuciones , directOrios
+
+Debían
+
+Scripts , Shell script interprete
+Revisar el marco teórico.
+
+Diseño de la propuesta
+Tiempo de evaluación...
+A pesar de que no se tiene un tiempo estImado que por experiencia de un profesor que nos compartió , nos indica quebtIene que invertIr un tiempo considerable ....
+
+Propósito del proyecto,   para apoyar su aprendizaje, lo cual podría contribuir.... 
+
+Mencionar el programa educativo, las prácticas que se van evaluar de forma automática serán desarrolladas teniendo en cuenta el plan educativo. 
+
+Recolección de información.
+Debe ir antes como se contactaron a los estudiantes.
+.el correo electrónico etc etc
+
+Mencionar que se utiliza Linux principalmente debían .
+
+Diagrama , en dónde realizan su actividad los alumnos (?) , Se requiere un documento de entrega (?) ,  Se entrega un reporte de prácticas (?)  Prórroga (?) 
+
+Cambiar el diagrama.
+
+Posibles soluciones , debería de cambiar 
+
+
+Puertos bien conocidos en el marco teórico.
+
+No sé abordarán temas de aprendizaje (limitaciones) 
+
+Versiones de debían,  añadir que en la revisión del doc y a la fecha etc etc
+
+Solo bash ? Python?
+El estudiante versión, sitio nube, servidor propio el .ovs para que lo descargue el estudiante. 
+
+Añadir que se identifica como.
+Especificar en el trabajo si el alumno o el docente ejecuta el script, se propone que se siga utilizando eminus 4 para que quede un registro en la plataforma institucional, sin embargo la herramienta ayudará a evaluar la parte práctica etc etc tiempo ,. Eval , etc 
+
+General (?) Por qué   debido a que son Distintos maestros , servicio. 
+
+Fecha versiones (?)
+
+Zenity (?) 
+Recursos (?) Etc etc....
+
+Ubicación del archivo,
+
+
+No sé encontró alguna similar.... Lo que diferencia de la propuesta a trabajos anteriores  .  Solución aclarar las diferencias.
+
+Formato OVA  especificar en el marco teórico.
+Ventanas emergentes no (x)
+
+Mande el resumen a un doc de todos los alumnos.
+
+No interfaz gráfica....
+Línea de comandos ++++

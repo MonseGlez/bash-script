@@ -1,0 +1,3 @@
+El servicio apache2 está instalado correctamente
+El servicio apache no está ejecutandose en el puerto 80
+Tu puntuacion es: 10 Final de evaluacion
