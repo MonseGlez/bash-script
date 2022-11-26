@@ -1,0 +1,7 @@
+Matricula=123
+Servicio=apache2
+Instalado=1
+Puerto=1
+Servicio=bind9
+Instalado=0
+Puerto=0 
