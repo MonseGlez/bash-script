@@ -36,9 +36,8 @@ puerto(){
        echo "${verde}Puerto=Sí" >> $file_evaluacion
         if [ $1 == "named" ]; then 
        echo "direccion de la zona dns configurada:"
-       nslookup patito.com | grep Address | awk '{print $2}'| sed -n 2p
-       echo "Se configuro el dominio $3 en la ip: " $(nslookup patito.com | grep Address | awk '{print $2}'| sed -n 2p) >> $file_evaluacion
-       echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
+       nslookup $3 | grep Address | awk '{print $2}'| sed -n 2p
+       echo "Se configuro el dominio $3 en la ip: " $(nslookup $3| grep Address | awk '{print $2}'| sed -n 2p) >> $file_evaluacion
        fi
    else
        echo "${rojo} El servicio "$servicio" no está ejecutandose en el puerto "$2""
@@ -147,11 +146,21 @@ case $opcion in
    
     cd /etc/bind
     archivo_dns=$(ls -l | grep $name_zone | awk '{print $9}')
-    echo "${amarillo} Se ejecutará la revisión de sintaxis del archivo: '$archivo_dns'"
-    sudo named-checkzone $name_zone $archivo_dns 
-    echo "${amarillo} Se ejecutará la revisión de sintaxis del archivo: '$archivo_dns'" >> $file_evaluacion
-    sudo named-checkzone $name_zone $archivo_dns >> $file_evaluacion   
-  
+
+    ls -l | grep $name_zone | awk '{print $9}'
+    archivo_db=/etc/bind/$archivo_dns
+    if [ -f $archivo_db  ]; then
+
+        echo "${amarillo} Se ejecutará la revisión de sintaxis del archivo: '$archivo_dns'"
+        sudo named-checkzone $name_zone $archivo_dns 
+        echo "${amarillo} Se ejecutará la revisión de sintaxis del archivo: '$archivo_dns'" >> $file_evaluacion
+        sudo named-checkzone $name_zone $archivo_dns >> $file_evaluacion        
+    else
+        echo "${rojo}No se encuentra el archivo de db donde esta definida la zona"
+        echo "${rojo}No se encuentra el archivo de db donde esta definida la zona" >> $file_evaluacion
+
+    fi
+    echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
 
     envio_maestro
     ;; 
