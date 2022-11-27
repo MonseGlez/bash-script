@@ -3,10 +3,6 @@ rojo=`tput setaf 1`
 amarillo=`tput setaf 3`
 verde=`tput setaf 2`
 blanco=`tput setaf 7`
-servicio_web="apache"
-servicio_dns="dns"
-puerto_web="80"
-puerto_dns="53"
 
 instalacion(){
     if [ "$1" == "apache" ]; then
@@ -15,7 +11,6 @@ instalacion(){
     elif [ "$1" == "dns" ];then
     servicio="bind9"
     fi
-
     cat /lib/systemd/system/"$servicio".service 1>> $file_respuesta 2>> $file_errores
     if [ $? == 0 ]; then
         echo "${verde} El servicio "$servicio" está instalado correctamente"
@@ -28,7 +23,14 @@ instalacion(){
     fi
 }
 
+evaluacion(){
+instalacion $servicio_web 
+puerto $servicio_web $puerto_web
+instalacion $servicio_dns
+puerto $servicio_dns $puerto_dns
 
+
+}
 
 puerto(){
    #escucha=$(netstat -plnt 2>> $file_errores | grep $2 | awk {'print $6'})
@@ -44,58 +46,76 @@ puerto(){
 
 fi
 }
+archivos(){
+file_evaluacion=~/evaluacion/retroalimentacion-$1-$(date +"%d-%m-%Y").txt
+file_errores=~/evaluacion/salidaerror-$1-$(date +"%d-%m-%Y").txt
+file_respuesta=~/evaluacion/salida-$1-$(date +"%d-%m-%Y").txt
 
-
-evaluacion(){
-instalacion $servicio_web 
-puerto $servicio_web $puerto_web
-instalacion $servicio_dns
-puerto $servicio_dns $puerto_dns
-
-
-}
-#modo_uso(){
-#echo "El modo de uso esperado es:  ./script nombre_servicio puertoesperado  por ejemplo: ./script apache 80"
-#}
-
-#modo_uso
-echo "ingresa tu matricula"
-read matricula
-file_evaluacion=~/evaluacion/retroalimentacion-$matricula-$(date +"%d-%m-%Y").txt
-file_errores=~/evaluacion/salidaerror-$matricula-$(date +"%d-%m-%Y").txt
-file_respuesta=~/evaluacion/salida-$matricula-$(date +"%d-%m-%Y").txt
 
 
 if [ -f $file_evaluacion ]
 then
    echo ""
-   #echo "Ya está creado el fichero, saltando creacion" 
-   #date
+   
 else
-   echo "El fichero no existe, creando"
 
    touch $file_evaluacion
-   echo "Matricula="$matricula>> $file_evaluacion
+   echo "Matricula="$1>> $file_evaluacion
 fi
+}
 
+ 
+menu() {
 
+echo "ingresa tu matricula"
+read matricula
+archivos $matricula
+echo "¿Qué actividad finalizaste?"
+echo "1) Servidor Web "
+echo "2) Servidor DNS "
+echo "3)Servidor Proxy "
+echo "4)Cancelar"
+read opcion
+case $opcion in
+    1) echo -n "Evaluación servicio Web"
+       echo -n "¿Está configurado en el puerto por defecto? 1. Si 2. No"
+       read respuesta
+      if [ "$respuesta" == "1" ]; then
+        puerto="80"
+        servicio="apache"
+        instalacion $servicio
+        puerto $servicio $puerto 
+      else
+        echo "¿En que puerto te fue solicitado?"
+        read puerto_custom 
+        puerto = $puerto_custom
+        servicio = "apache"
+        instalacion $servicio
+        puerto $servicio $puerto 
+     fi
+    
+    
+    ;; 
+    2) echo -n "Evaluación servicio DNS"
+       echo -n "¿Está configurado en el puerto por defecto? 1. Si 2. No"
+       read respuesta
+      if [ "$respuesta" == "1" ]; then
+        puerto="53"
+        servicio="dns"
+        instalacion $servicio
+        puerto $servicio $puerto 
+      else
+        echo "¿En que puerto te fue solicitado?"
+        read puerto_custom 
+        puerto = $puerto_custom
+        servicio = "dns"
+        instalacion $servicio
+        puerto $servicio $puerto 
+     fi
+    
+    
+    ;; 
+esac
+}
 
-evaluacion $1 $2
-file_csv=~/evaluacion/formatt.csv
-#touch $file_csv
-
-
-for F in $file_evaluacion
-do
-    {
-        read Matricula
-        read Servicio
-        read Puerto
-
-    }< $F
-    echo "$Matricula,$Servicio,$Puerto" >> $file_csv
-
-done
-
-
-
+menu
