@@ -15,7 +15,14 @@ instalacion(){
     cat /lib/systemd/system/"$servicio".service 1>> $file_respuesta 2>> $file_errores
     if [ $? == 0 ]; then
         echo "${verde} El servicio "$servicio" está instalado correctamente"
+        zcat /var/log/apt/history.log.*.gz | cat - /var/log/dpkg.log | grep -E 'install' |grep $1  
+        if [ $? == 0 ]; then
+        echo "${azul}Instalado desde APT"
+        echo "${azul}Instalado desde APT" >> file_evaluacion
         echo "${verde}Servicio="$servicio"">> $file_evaluacion
+        else
+         echo "${azul} Instalado desde compilacion"
+        fi
 	echo "${verde}Instalado=Sí" >> $file_evaluacion
     else
         echo "${rojo} El servicio "$servicio" no está instalado"
@@ -91,7 +98,8 @@ fi
 echo "${azul}¿Qué actividad finalizaste?"
 echo "${azul}1) Servidor Web "
 echo "${azul}2) Servidor DNS "
-echo "${azul}3) Salir "
+echo "${azul}3) Servidor Proxy "
+echo "${azul}4) Salir "
 read opcion
   
 
@@ -171,7 +179,9 @@ case $opcion in
 
     envio_maestro
     ;; 
-    3) exit;;
+    3) echo "Evaluación servidor Proxy"
+    ;;
+    4) exit;;
     "") echo "No haz seleccionado nada"
          ;; 
     *) echo "Opción no válida" ;;
