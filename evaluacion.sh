@@ -30,7 +30,15 @@ instalacion $servicio_dns
 puerto $servicio_dns $puerto_dns
 }
 puerto(){
-   nc -z -v 127.0.0.1 $2 
+   if [ "$1" == "apache" ]; then
+    sudo lsof -i:$2 -n -P | awk {'print $1'} | grep apache2
+
+   elif [ "$1" == "dns" ];then
+    sudo lsof -i:$2 -n -P | awk {'print $1'} | grep named
+  
+    fi
+   #sudo lsof -i:$2 -n -P  
+   
    if [ $? == 0 ]; then 
        echo "${verde} El servicio "$1" corriendo en el puerto "$2"" 
        echo "${verde}Puerto=Sí" >> $file_evaluacion
@@ -80,7 +88,6 @@ if [ "$matricula_verifica" == "" ]; then
          echo "${rojo}Ejecuta nuevamente el script."
          exit
 fi
-while [ "$opcion" != "3"  ]; do
 echo "${azul}¿Qué actividad finalizaste?"
 echo "${azul}1) Servidor Web "
 echo "${azul}2) Servidor DNS "
@@ -170,7 +177,7 @@ case $opcion in
     *) echo "Opción no válida" ;;
      
 esac
-done
+
 }
 envio_maestro(){
 carpeta_alumno=~/.mnt_nfs/$matricula
