@@ -104,11 +104,8 @@ echo "${azul}¿Qué actividad finalizaste?"
 echo "${azul}1) Servidor Web "
 echo "${azul}2) Servidor DNS "
 echo "${azul}3) Servidor Proxy "
-echo "${azul}4) Enviar evaluacion "
-echo "${azul}5) Salir "
-
-read opcion
-  
+echo "${azul}4 ) Salir "
+read opcion  
 
 case $opcion in
     1) echo  "Evaluación servicio Web"
@@ -136,6 +133,7 @@ case $opcion in
      a2query -s
      echo "${amarillo}los virtual host configurados son: " $(a2query -s) >> $file_evaluacion
      echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
+     envio_maestro
  
     ;; 
     2)
@@ -182,7 +180,8 @@ case $opcion in
 
     fi
     echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
-
+    envio_maestro
+    
     ;; 
     3) echo "Evaluación servidor Proxy"
     log_file_squid=/var/log/squid/access.log
@@ -191,23 +190,22 @@ case $opcion in
     instalacion $servicio
     puerto $servicio $puerto
     echo "Se evaluara que el proxy bloquee la red social facebook."
-    status_code=$(curl -IL --silent facebook.com | grep HTTP |awk {'print $2'}| tail -n 1)
-    if [ "$status_code" == 200 ]; then
+    status_code=`curl -k --silent --output /dev/null -L -w "\n%{http_code}" 'facebook.com' |tail -n 1`
+    if [ "$status_code" == "200" ]; then
       echo "${rojo}El proxy No está bloqueando el sitio. Conexión permitida"
       echo "${rojo}El proxy No está bloqueando el sitio. Conexión permitida" >> $file_evaluacion
-
-    elif [ "$status_code" == 403 ]; then
-      curl facebook.com
+    fi
+    if [ "$status_code" == "403" ]; then
       echo "${verde}El proxy Esta bloqueando el sitio , Conexión Denegada."
       echo "${verde}El proxy Esta bloqueando el sitio , Conexión Denegada." >> $file_evaluacion
 
     fi
-    echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
-
     
+    echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
+    envio_maestro
+   
     ;;
-    4)envio_maestro;;
-    5) exit;;
+    4) exit;;
     "") echo "No haz seleccionado nada"
          ;; 
     *) echo "Opción no válida" ;;
@@ -217,6 +215,7 @@ esac
 }
 envio_maestro(){
 carpeta_alumno=~/.mnt_nfs/$matricula
+echo "${amarillo}----------------Envío de evaluación-----------------"
 echo "${amarillo}Ingresa la dirección IP de la máquina del maestro"
 read ip
 ping -c 3 $ip 1>> /dev/null
@@ -233,11 +232,13 @@ if [ $? == 0 ]; then
     sudo cp $file_evaluacion  $carpeta_alumno
     sudo cp $file_errores $carpeta_alumno
     fi
+    sudo umount  ~/.mnt_nfs/
+
 else
 echo "${rojo}No hay comunicación con el servidor NFS, Revisa tu conexión"
 echo "${amarillo} Tu dirección IP es:"  $ip_alumno
 echo "${amarillo}Los equipos deben estar en el mismo segmento de red"
 fi
 }
+
 menu
-sudo umount  ~/.mnt_nfs/
