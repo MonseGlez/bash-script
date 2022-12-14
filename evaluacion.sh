@@ -11,7 +11,11 @@ instalacion(){
 
     elif [ "$1" == "dns" ];then
     servicio="named"
+    elif [ "$1" == "proxy" ];then
+    servicio="squid"
+    
     fi
+
     cat /lib/systemd/system/"$servicio".service 1>> $file_respuesta 2>> $file_errores
     if [ $? == 0 ]; then
         echo "${verde} El servicio "$servicio" está instalado correctamente"
@@ -42,7 +46,8 @@ puerto(){
 
    elif [ "$1" == "dns" ];then
     sudo lsof -i:$2 -n -P | awk {'print $1'} | grep named
-  
+   elif [ "$1" == "proxy" ]; then
+    sudo lsof -i:3128 -n -P | awk {'print $1'} | grep squid
     fi
    #sudo lsof -i:$2 -n -P  
    
@@ -99,7 +104,9 @@ echo "${azul}¿Qué actividad finalizaste?"
 echo "${azul}1) Servidor Web "
 echo "${azul}2) Servidor DNS "
 echo "${azul}3) Servidor Proxy "
-echo "${azul}4) Salir "
+echo "${azul}4) Enviar evaluacion "
+echo "${azul}5) Salir "
+
 read opcion
   
 
@@ -129,7 +136,6 @@ case $opcion in
      a2query -s
      echo "${amarillo}los virtual host configurados son: " $(a2query -s) >> $file_evaluacion
      echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
-     envio_maestro
  
     ;; 
     2)
@@ -177,11 +183,31 @@ case $opcion in
     fi
     echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
 
-    envio_maestro
     ;; 
     3) echo "Evaluación servidor Proxy"
+    log_file_squid=/var/log/squid/access.log
+    puerto="3128"
+    servicio="squid"
+    instalacion $servicio
+    puerto $servicio $puerto
+    echo "Se evaluara que el proxy bloquee la red social facebook."
+    status_code=$(curl -IL --silent facebook.com | grep HTTP |awk {'print $2'}| tail -n 1)
+    if [ "$status_code" == 200 ]; then
+      echo "${rojo}El proxy No está bloqueando el sitio. Conexión permitida"
+      echo "${rojo}El proxy No está bloqueando el sitio. Conexión permitida" >> $file_evaluacion
+
+    elif [ "$status_code" == 403 ]; then
+      curl facebook.com
+      echo "${verde}El proxy Esta bloqueando el sitio , Conexión Denegada."
+      echo "${verde}El proxy Esta bloqueando el sitio , Conexión Denegada." >> $file_evaluacion
+
+    fi
+    echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
+
+    
     ;;
-    4) exit;;
+    4)envio_maestro;;
+    5) exit;;
     "") echo "No haz seleccionado nada"
          ;; 
     *) echo "Opción no válida" ;;
