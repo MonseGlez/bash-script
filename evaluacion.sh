@@ -223,7 +223,7 @@ echo "${amarillo}Ingresa la dirección IP de la máquina del maestro"
 read ip
 ping -c 3 $ip 1>> /dev/null
 if [ $? == 0 ]; then  
-    sudo mount -t nfs $ip:/mnt/calificaciones ~/.mnt_nfs/ 2>>/dev/null 
+    sudo mount -t nfs $ip:/mnt/calificaciones ~/.mnt_nfs/ 
     if [ $? == 0 ]; then 
       if [ -d "$carpeta_alumno" ]; then
       sudo cp $file_respuesta $carpeta_alumno
