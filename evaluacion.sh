@@ -236,7 +236,7 @@ if [ $? == 0 ]; then
       sudo cp $file_evaluacion  $carpeta_alumno
       sudo cp $file_errores $carpeta_alumno
       fi
-      sudo umount -l  ~/.mnt_nfs/ 2>>file_errores
+      sudo umount -l  ~/.mnt_nfs/ 2>>/dev/null
     else
       echo "${rojo}No hay comunicación con el servidor NFS, Revisa tu conexión"
       echo "${amarillo} Tu dirección IP es:"  $ip_alumno
