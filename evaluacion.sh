@@ -49,7 +49,6 @@ puerto(){
    elif [ "$1" == "proxy" ]; then
     sudo lsof -i:3128 -n -P | awk {'print $1'} | grep squid
     fi
-   #sudo lsof -i:$2 -n -P  
    
    if [ $? == 0 ]; then 
        echo "${verde} El servicio "$1" corriendo en el puerto "$2"" 
@@ -132,12 +131,13 @@ case $opcion in
      echo "Los virtual host configurados son : "
      a2query -s
      if [ $? == 0 ]; then 
-	echo "${amarillo}los virtual host configurados son: " $(a2query -s) >> $file_evaluacion
+	    echo "${amarillo}los virtual host configurados son: " $(a2query -s) >> $file_evaluacion
     	echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
-     else:
-	echo "${rojo}No esta configurado ningún virtualhost"
-     envio_maestro
- 
+        envio_maestro
+     else
+	    echo "${rojo}No esta configurado ningún virtualhost"
+	    echo "${rojo}No esta configurado ningún virtualhost" >> $file_evaluacion
+ 	   fi
     ;; 
     2)
        
@@ -223,20 +223,25 @@ echo "${amarillo}Ingresa la dirección IP de la máquina del maestro"
 read ip
 ping -c 3 $ip 1>> /dev/null
 if [ $? == 0 ]; then  
-    sudo mount -t nfs $ip:/mnt/calificaciones ~/.mnt_nfs/
-    if [ -d "$carpeta_alumno" ]; then
-    sudo cp $file_respuesta $carpeta_alumno
-    sudo cp $file_evaluacion  $carpeta_alumno
-    sudo cp $file_errores  $carpeta_alumno
+    sudo mount -t nfs $ip:/mnt/calificaciones ~/.mnt_nfs/ 2>>file_errores 1>>file_respuesta
+    if [ $? == 0 ]; then 
+      if [ -d "$carpeta_alumno" ]; then
+      sudo cp $file_respuesta $carpeta_alumno
+      sudo cp $file_evaluacion  $carpeta_alumno
+      sudo cp $file_errores  $carpeta_alumno
+      else
+      cd ~/.mnt_nfs
+      sudo mkdir $matricula
+      sudo cp $file_respuesta  $carpeta_alumno
+      sudo cp $file_evaluacion  $carpeta_alumno
+      sudo cp $file_errores $carpeta_alumno
+      fi
+      sudo umount -l  ~/.mnt_nfs/ 2>>file_errores
     else
-    cd ~/.mnt_nfs
-    sudo mkdir $matricula
-    sudo cp $file_respuesta  $carpeta_alumno
-    sudo cp $file_evaluacion  $carpeta_alumno
-    sudo cp $file_errores $carpeta_alumno
+      echo "${rojo}No hay comunicación con el servidor NFS, Revisa tu conexión"
+      echo "${amarillo} Tu dirección IP es:"  $ip_alumno
+      echo "${amarillo}Los equipos deben estar en el mismo segmento de red"
     fi
-    sudo umount -l  ~/.mnt_nfs/
-
 else
 echo "${rojo}No hay comunicación con el servidor NFS, Revisa tu conexión"
 echo "${amarillo} Tu dirección IP es:"  $ip_alumno
