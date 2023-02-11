@@ -131,8 +131,11 @@ case $opcion in
      fi  
      echo "Los virtual host configurados son : "
      a2query -s
-     echo "${amarillo}los virtual host configurados son: " $(a2query -s) >> $file_evaluacion
-     echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
+     if [ $? == 0 ]; then 
+	echo "${amarillo}los virtual host configurados son: " $(a2query -s) >> $file_evaluacion
+    	echo "${gris}Fecha y hora de evaluación " $(date) >> $file_evaluacion
+     else:
+	echo "${rojo}No esta configurado ningún virtualhost"
      envio_maestro
  
     ;; 
@@ -184,13 +187,13 @@ case $opcion in
     
     ;; 
     3) echo "Evaluación servidor Proxy"
-    log_file_squid=/var/log/squid/access.log
     puerto="3128"
     servicio="squid"
+    url_proxy="facebook.com"
     instalacion $servicio
     puerto $servicio $puerto
     echo "Se evaluara que el proxy bloquee la red social facebook."
-    status_code=`curl -k --silent --output /dev/null -L -w "\n%{http_code}" 'facebook.com' |tail -n 1`
+    status_code=`curl -k --silent --output /dev/null -L -w "\n%{http_code}" $url_proxy |tail -n 1`
     if [ "$status_code" == "200" ]; then
       echo "${rojo}El proxy No está bloqueando el sitio. Conexión permitida"
       echo "${rojo}El proxy No está bloqueando el sitio. Conexión permitida" >> $file_evaluacion
@@ -232,7 +235,7 @@ if [ $? == 0 ]; then
     sudo cp $file_evaluacion  $carpeta_alumno
     sudo cp $file_errores $carpeta_alumno
     fi
-    sudo umount  ~/.mnt_nfs/
+    sudo umount -l  ~/.mnt_nfs/
 
 else
 echo "${rojo}No hay comunicación con el servidor NFS, Revisa tu conexión"
